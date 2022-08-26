@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>week11</title>
+
+    <!-- leaflet css  -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            width: 100%;
+            height: 100vh;
+        }
+
+        .leaflet-popup-content {
+            width: 600px !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+    // Map initialization 
+    var map = L.map('map').setView([-1.0929660677851454,37.012274265289314], 15);
+    //osm layer
+    var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });
+    osm.addTo(map);
+        //Turf creating geometry (GeoJSON)
+    var point = turf.multiPoint([[37.009,-1.081], [37.014,-1.101]])
+    L.geoJSON(point).addTo(map);
+    var buffered = turf.buffer(point,1 , {units: 'kilometers'});
+    L.geoJSON(buffered).addTo(map);
+    var line11 = turf.lineString([[37.009,-1.081], [37.014,-1.101]])
+    L.geoJSON(line11).addTo(map);
+    var buffered2 = turf.buffer(line11,0.1 , {units: 'kilometers'});
+    L.geoJSON(buffered2).addTo(map);
+</script>
+</body>
+
+</html>
+
+
+
+
